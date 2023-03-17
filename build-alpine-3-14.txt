@@ -1,0 +1,11 @@
+➜  powershell-in-docker docker build -t powershell .
+[+] Building 30.7s (3/3) FINISHED                                                                                                                                                                           
+ => [internal] load build definition from Dockerfile                                                                                                                                                   0.0s
+ => => transferring dockerfile: 270B                                                                                                                                                                   0.0s
+ => [internal] load .dockerignore                                                                                                                                                                      0.0s
+ => => transferring context: 2B                                                                                                                                                                        0.0s
+ => ERROR [internal] load metadata for mcr.microsoft.com/powershell:lts-alpine-3.14                                                                                                                   30.6s
+------
+ > [internal] load metadata for mcr.microsoft.com/powershell:lts-alpine-3.14:
+------
+failed to solve with frontend dockerfile.v0: failed to create LLB definition: failed to copy: httpReadSeeker: failed open: failed to do request: Get "https://southeastasia.data.mcr.microsoft.com/353485d638e24519ae59b2c19249e31f-vd4vgzv6do//docker/registry/v2/blobs/sha256/c0/c0000c80c34ef521a36c489f728cf998feaa1db308019394d8720f53d387ab24/data?se=2023-03-17T10%3A37%3A01Z&sig=cwOUfcznUXbez%2FQie%2BSZ2GP2CmLH257NiaOoMasMliM%3D&sp=r&spr=https&sr=b&sv=2016-05-31&regid=353485d638e24519ae59b2c19249e31f": proxyconnect tcp: dial tcp 192.168.65.7:3128: i/o timeout
