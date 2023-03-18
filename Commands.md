@@ -40,4 +40,14 @@ docker rm <container_id>
 docker rm -f <container_id>
 ```
 
+## List Images
+```
+docker images
+```
+
+## Remove Image
+```
+docker image rm <image_id>
+```
+
 
