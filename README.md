@@ -7,3 +7,4 @@
 - [MS Learn - Writing Powershell Dockerfile](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-docker/manage-windows-dockerfile)
 - [MS Learn - Optimise Powershell Dockerfile](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-docker/optimize-windows-dockerfile)
 - [Powershell-Docker Sample Dockerfile](https://github.com/PowerShell/PowerShell-Docker/blob/master/tools/.gitpod.Dockerfile)
+- [AWS For PowerShell](https://github.com/aws-samples/aws-net-guides/blob/master/Communications/ParameterStore-Example/Readme.md)
