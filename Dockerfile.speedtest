@@ -1,0 +1,69 @@
+# FROM mcr.microsoft.com/powershell:latest
+# 
+FROM mcr.microsoft.com/powershell:lts-alpine-3.14
+
+#lts-ubi-8 works
+# FROM mcr.microsoft.com/powershell:lts-ubi-8
+
+# FROM mcr.microsoft.com/powershell
+
+# SHELL ["pwsh", "-NoLogo", "-NoProfile", "-Command", "$ErrorActionPreference = 'Stop';$ProgressPreference = 'SilentlyContinue';"]
+
+# SHELL ["pwsh", "-NoLogo", "-NoProfile", "-Command"]
+
+# AVERAGE BUILD SPEED (43.6s, 44.5s)
+# RUN pwsh -c "\
+#     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; \
+#     Install-Module -Name AWS.Tools.Installer -Scope AllUsers; \
+#     Install-Module -Name AWS.Tools.Common -Scope AllUsers; \
+#     "
+
+# SLOWER BUILD SPEED (64.7s, 64.4s)
+# RUN pwsh -c "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted" \
+#     && pwsh -c "Install-Module -Name AWS.Tools.Installer -Scope AllUsers" \
+#     && pwsh -c "Install-Module -Name AWS.Tools.Common -Scope AllUsers"
+
+# BETTER AVERAGE BUILD SPEED (38.5s, 39.0s) - 3 layers
+# SHELL [ "pwsh", "-Command" ]
+# RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted \
+#     && Install-Module -Name AWS.Tools.Installer -Scope AllUsers \
+#     && Install-Module -Name AWS.Tools.Common -Scope AllUsers
+
+# ## DOES NOT WORK BUT FAST (2.4s, 2.2s) - FAST BUT USELESS
+# SHELL [ "pwsh", "-Command" ]
+# RUN "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted" \
+#     && "Install-Module -Name AWS.Tools.Installer -Scope AllUsers" \
+#     && "Install-Module -Name AWS.Tools.Common -Scope AllUsers"
+
+# SLOW - Each RUN introduces an extra layer, more layers = slower (66.7s, 66.6s) - 5 layers
+# SHELL [ "pwsh", "-command" ]
+# RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+# RUN Install-Module AWS.Tools.Installer -Scope AllUsers
+# RUN Install-Module AWS.Tools.Common -Scope AllUsers
+
+# SLOW (68.1s, 81.8s)
+# RUN pwsh -c "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted"
+# RUN pwsh -c "Install-Module AWS.Tools.Installer -Scope AllUsers"
+# RUN pwsh -c "Install-Module AWS.Tools.Common -Scope AllUsers"
+
+# WHY IS IT SLOWER? (42.0s, 41.9s)
+# SHELL [ "pwsh", "-NoLogo", "-NoProfile", "-Command" ]
+# RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted \
+#     && Install-Module -Name AWS.Tools.Installer -Scope AllUsers \
+#     && Install-Module -Name AWS.Tools.Common -Scope AllUsers
+
+# The One-liner(42.0s, 43.6s)
+# RUN pwsh -c "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted;Install-Module -Name AWS.Tools.Installer -Scope AllUsers;Install-Module -Name AWS.Tools.Common -Scope AllUsers"
+
+# 58.0s, 41.0s, 41.9s - maybe network speed plays a part in this?
+SHELL [ "pwsh", "-Command" ]
+RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted \
+    && Install-Module -Name AWS.Tools.Installer -Scope AllUsers \
+    && Install-Module -Name AWS.Tools.Common -Scope AllUsers
+
+
+WORKDIR /app
+
+CMD [ "pwsh" ]
+
+# CMD [ "pwsh", "--version" ]

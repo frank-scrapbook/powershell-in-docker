@@ -49,5 +49,53 @@ docker images
 ```
 docker image rm <image_id>
 ```
+OR
+```
+docker rmi <image_id>
+```
 
+## Build image for pushing to dockerhub (with username)
+```
+docker build -t frankpengau/powershell-in-docker .
+```
 
+## Build image with no cache
+```
+docker build --no-cache -t frankpengau/powershell-in-docker .
+```
+
+## Push image
+```
+docker login
+docker push frankpengau/powershell-in-docker
+```
+
+## Run with interactive mode (-it) and remove container on exit (--rm)
+```
+docker run --rm -it frankpengau/powershell-in-docker
+```
+
+# Powershell Commands
+## Get PSGallery Installation Policy Details
+```
+Get-PSRepository
+```
+OR
+```
+Get-PSRepository -Name PSGallery
+```
+
+## List available powershell modules
+```
+Get-Module -ListAvailable
+```
+
+## List Installed powershell modules (installed via Install-Module)
+```
+Get-InstalledModule
+```
+
+## Get Execution Policy
+```
+Get-ExecutionPolicy
+```
